@@ -25,6 +25,11 @@
 
 		var map = new L.Map('map')
 		.addLayer(osm);
+
+		if (!location.hash) {
+			map.locate({setView: true, maxZoom: 15});
+		}
+
 		new L.Hash(map);
 
 		document.getElementById("locate").onclick = function() {
