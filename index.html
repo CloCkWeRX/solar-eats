@@ -25,11 +25,7 @@
 		var opl = new L.OverPassLayer({
 		    'query': query,
 		});
-		map.eachLayer(function (layer) {
-			setTimeout(function() {
-			    map.removeLayer(layer);
-			}, 2000);
-		});
+	
 		map.addLayer(opl);
 	}
 	window.onload = function() {
@@ -57,8 +53,7 @@
 			map.locate({setView: true, maxZoom: 15});
 		};
 
-		map.on('viewreset', function() { queryFeatures(map) });
-		map.on('moveend',  function() { queryFeatures(map) });
+		queryFeatures(map);
 	};
 </script>
 </head>
