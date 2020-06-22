@@ -11,6 +11,27 @@
 </style>
 <script>
 
+	function queryFeatures(map) {
+		var query = `way["power"="generator"]({{bbox}});
+		(
+		  node["amenity"~"pub|cafe|restaurant|fast_food"](around:50);
+		  way["amenity"~"pub|cafe|restaurant|fast_food"](around:50);
+		  relation["amenity"~"pub|cafe|restaurant|fast_food"](around:50);
+		);
+		out body;
+		>;
+		out skel qt;`;
+
+		var opl = new L.OverPassLayer({
+		    'query': query,
+		});
+		map.eachLayer(function (layer) {
+			setTimeout(function() {
+			    map.removeLayer(layer);
+			}, 200);
+		});
+		map.addLayer(opl);
+	}
 	window.onload = function() {
 		var attr_osm = 'Map data &copy; <a href="http://openstreetmap.org/">OpenStreetMap</a> contributors';
 		var attr_overpass = 'POI via <a href="http://www.overpass-api.de/">Overpass API</a>';
@@ -36,23 +57,8 @@
 			map.locate({setView: true, maxZoom: 15});
 		};
 
-		map.on('viewreset', function () {
-			var query = `way["power"="generator"]({{bbox}});
-			(
-			  node["amenity"~"pub|cafe|restaurant|fast_food"](around:50);
-			  way["amenity"~"pub|cafe|restaurant|fast_food"](around:50);
-			  relation["amenity"~"pub|cafe|restaurant|fast_food"](around:50);
-			);
-			out body;
-			>;
-			out skel qt;`;
-
-			var opl = new L.OverPassLayer({
-			    'query': query,
-			});
-
-			map.addLayer(opl);
-		});
+		map.on('viewreset', function() { queryFeatures(map) });
+		map.on('moveend',  function() { queryFeatures(map) });
 	};
 </script>
 </head>
