@@ -31,6 +31,8 @@
 
 		var query = `way["power"="generator"]({{bbox}});
 (
+  relation["amenity"="pub|restaurant|fast_food"](around:50);
+  node["amenity"="pub|restaurant|fast_food"](around:50);
   way["amenity"="pub|restaurant|fast_food"](around:50);
 );
 out body;
