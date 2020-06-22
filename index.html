@@ -27,7 +27,7 @@
 		.addLayer(osm);
 		new L.Hash(map);
 
-		map.on('locationerror', function() { map.setView(new L.LatLng(52.265, 10.524), 15); });
+		map.on('locationerror', function() { new L.Hash(map); });
 
 		map.locate({setView: true, maxZoom: 15});
 
