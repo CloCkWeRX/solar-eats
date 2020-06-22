@@ -39,21 +39,9 @@
 		map.on('viewreset', function () {
 			var query = `way["power"="generator"]({{bbox}});
 			(
-			  node["amenity"="pub"](around:50);
-			  way["amenity"="pub"](around:50);
-			  relation["amenity"="pub"](around:50);
-
-			  node["amenity"="cafe"](around:50);
-			  way["amenity"="cafe"](around:50);
-			  relation["amenity"="cafe"](around:50);
-
-			  node["amenity"="restaurant"](around:50);
-			  way["amenity"="restaurant"](around:50);
-			  relation["amenity"="restaurant"](around:50);
-
-			  node["amenity"="fast_food"](around:50);
-			  way["amenity"="fast_food"](around:50);
-			  relation["amenity"="fast_food"](around:50);
+			  node["amenity"~"pub|cafe|restaurant|fast_food"](around:50);
+			  way["amenity"~"pub|cafe|restaurant|fast_food"](around:50);
+			  relation["amenity"~"pub|cafe|restaurant|fast_food"](around:50);
 			);
 			out body;
 			>;
