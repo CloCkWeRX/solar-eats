@@ -29,33 +29,35 @@
 
 		map.locate({setView: true, maxZoom: 15});
 
-		var query = `way["power"="generator"]({{bbox}});
-(
-  node["amenity"="pub"](around:50);
-  way["amenity"="pub"](around:50);
-  relation["amenity"="pub"](around:50);
+		map.on('viewreset', function () {
+			var query = `way["power"="generator"]({{bbox}});
+			(
+			  node["amenity"="pub"](around:50);
+			  way["amenity"="pub"](around:50);
+			  relation["amenity"="pub"](around:50);
 
-  node["amenity"="cafe"](around:50);
-  way["amenity"="cafe"](around:50);
-  relation["amenity"="cafe"](around:50);
+			  node["amenity"="cafe"](around:50);
+			  way["amenity"="cafe"](around:50);
+			  relation["amenity"="cafe"](around:50);
 
-  node["amenity"="restaurant"](around:50);
-  way["amenity"="restaurant"](around:50);
-  relation["amenity"="restaurant"](around:50);
+			  node["amenity"="restaurant"](around:50);
+			  way["amenity"="restaurant"](around:50);
+			  relation["amenity"="restaurant"](around:50);
 
-  node["amenity"="fast_food"](around:50);
-  way["amenity"="fast_food"](around:50);
-  relation["amenity"="fast_food"](around:50);
-);
-out body;
->;
-out skel qt;`;
+			  node["amenity"="fast_food"](around:50);
+			  way["amenity"="fast_food"](around:50);
+			  relation["amenity"="fast_food"](around:50);
+			);
+			out body;
+			>;
+			out skel qt;`;
 
-		var opl = new L.OverPassLayer({
-		    'query': query,
+			var opl = new L.OverPassLayer({
+			    'query': query,
+			});
+
+			map.addLayer(opl);
 		});
-
-		map.addLayer(opl);
 	};
 </script>
 </head>
