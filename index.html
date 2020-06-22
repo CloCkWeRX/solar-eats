@@ -1,13 +1,47 @@
 <html>
 <head>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+<link rel="stylesheet" href="/bower_components/leaflet/dist/leaflet.css" />
+
+<link rel="stylesheet" href="/bower_components/leaflet-overpass-layer/dist/OverPassLayer.css" />
+<script src="/bower_components/leaflet/dist/leaflet.js"></script>
+<script src="/bower_components/leaflet-overpass-layer/dist/OverPassLayer.bundle.js"></script>
 <style>
 	#map { height: 640px; }
 </style>
 <script>
+
 	window.onload = function() {
-		var mymap = L.map('map').setView([51.505, -0.09], 13);
+		var attr_osm = 'Map data &copy; <a href="http://openstreetmap.org/">OpenStreetMap</a> contributors';
+		var attr_overpass = 'POI via <a href="http://www.overpass-api.de/">Overpass API</a>';
+
+		var osm = new L.TileLayer(
+		    'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+		    {
+		        'opacity': 0.7,
+		        'attribution': [attr_osm, attr_overpass].join(', ')
+		    }
+		);
+
+		var map = new L.Map('map')
+		.addLayer(osm);
+
+		map.on('locationerror', function() { map.setView(new L.LatLng(52.265, 10.524), 15); });
+
+		map.locate({setView: true, maxZoom: 15});
+
+		var query = `way["power"="generator"]({{bbox}});
+(
+  way["amenity"="pub|restaurant|fast_food"](around:50);
+);
+out body;
+>;
+out skel qt;`;
+
+		var opl = new L.OverPassLayer({
+		    'query': query,
+		});
+
+		map.addLayer(opl);
 	};
 </script>
 </head>
