@@ -24,6 +24,8 @@
 
 		var opl = new L.OverPassLayer({
 		    'query': query,
+		    minZoom: 10,
+			timeout: 25 * 1000
 		});
 	
 		map.addLayer(opl);
