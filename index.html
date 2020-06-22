@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="//unpkg.com/leaflet-overpass-layer@2.8.3/dist/OverPassLayer.css" />
 <script src="//unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
 <script src="//unpkg.com/leaflet-overpass-layer@2.8.3/dist/OverPassLayer.bundle.js"></script>
+<script src="//unpkg.com/leaflet-hash@0.2.1/leaflet-hash.js"></script>
 <style>
 	#map { height: 640px; }
 </style>
@@ -24,6 +25,7 @@
 
 		var map = new L.Map('map')
 		.addLayer(osm);
+		new L.Hash(map);
 
 		map.on('locationerror', function() { map.setView(new L.LatLng(52.265, 10.524), 15); });
 
