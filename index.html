@@ -27,9 +27,9 @@
 		.addLayer(osm);
 		new L.Hash(map);
 
-		map.on('locationerror', function() { new L.Hash(map); });
-
-		map.locate({setView: true, maxZoom: 15});
+		document.getElementById("locate").onclick = function() {
+			map.locate({setView: true, maxZoom: 15});
+		};
 
 		map.on('viewreset', function () {
 			var query = `way["power"="generator"]({{bbox}});
@@ -65,5 +65,6 @@
 </head>
 <body>
 	<div id="map"></div>
+	<button id="locate">Locate me</button>
 </body>
 </html>
